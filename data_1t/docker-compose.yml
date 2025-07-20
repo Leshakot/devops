@@ -1,0 +1,39 @@
+name: lt-compose
+services:
+  db:
+    image: postgres:17.0-alpine3.20
+    environment:
+      POSTGRES_DB: "Kotenev"
+      POSTGRES_USER: "leshakot"
+      POSTGRES_PASSWORD: "leshakot"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Скрипт инициализации
+    networks:
+      - service-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U leshakot -d Kotenev"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: Kotenev
+      POSTGRES_USER: leshakot
+      POSTGRES_PASSWORD: leshakot
+    networks:
+      - service-net
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pg-data:
+
+networks:
+  service-net:
