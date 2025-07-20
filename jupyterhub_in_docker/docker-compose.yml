@@ -1,0 +1,41 @@
+services:
+  jupyterhub:
+    build: .
+    container_name: jupyterhub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock             # позволяет контейнеру управлять Docker-демоном
+      - jupyterhub_data:/srv/jupyterhub/data                  # том с данными JupyterHub
+      - jupyterhub_logs:/var/log/jupyterhub                    # том с логами JupyterHub
+      - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py  # локальный конфиг в контейнер
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    mem_limit: "1GB"
+    depends_on:
+      - notebook
+    networks:
+      - backend
+
+  notebook:
+    build:
+      context: ./pattern_notebook
+      dockerfile: Dockerfile
+    image: pattern_notebook:v1
+    mem_limit: "1GB"
+    healthcheck:
+      test: ["CMD-SHELL", "jupyter-notebook --version"]
+      interval: 10s
+      timeout: 15s
+      retries: 3
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
+
+volumes:
+  jupyterhub_data:
+  jupyterhub_logs:

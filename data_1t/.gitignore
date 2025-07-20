@@ -1,0 +1,15 @@
+.env
+.idea
+.csv
+venv/
+__pycache__
+data.db
+session_name.session
+*.session
+*.session-journal
+
+log.py
+test.py
+
+*.log
+*.pid

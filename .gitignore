@@ -1,0 +1,58 @@
+# === Python bytecode and caches ===
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.so
+
+# === Distribution / packaging ===
+*.egg
+*.egg-info/
+**/*.egg-info/
+dist/
+build/
+
+# === Virtual environments ===
+venv/
+env/
+**/venv/
+**/env/
+
+# === IDE settings ===
+.idea/
+.vscode/
+**/.idea/
+**/.vscode/
+
+# === Environment variables ===
+.env
+**/.env
+
+# === Databases and sessions ===
+*.db
+*.sqlite
+*.sqlite3
+*.session
+*.session-journal
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.session
+**/*.session-journal
+
+# === Logs and runtime ===
+*.log
+*.pid
+*.swp
+**/*.log
+**/*.pid
+**/*.swp
+
+# === Jupyter notebooks checkpoints ===
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# === OS-specific files ===
+.DS_Store
+Thumbs.db
+**/.DS_Store
+**/Thumbs.db
